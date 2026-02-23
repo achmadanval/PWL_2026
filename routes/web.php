@@ -1,31 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomController;
+use App\Http\Controllers\PhotoController;
 
-Route::get('/hello', function () {
-    return 'Hello World';
-});
+Route::get('/hello',[WelcomController::class,'hello']);
 
 Route::get('/world', function () {
     return 'World';
 });
-Route::get('/Hai', function () {
-    return 'Selamat Datang';
-});
+Route::get('/index', [PageController::class, 'index']);
+
 Route::get('/about', function () {
     return '244107020039';
 });
 Route::get('/User/{name}', function ($name) {
-    return 'Nama Saya ' .$name;
+    return 'Nama Saya' .$name;
 });
+
+Route::get('/about/{nama}/{NIM}', [PageController::class, 'about']);
 
 Route::get('/post/{post}/comments/{comment}', function ($postid, $commentid) {
     return 'post ke- ' .$postid. "Komentar ke- ".$commentid;
 });
+
+Route::get('/articles/{id}', [PageController::class, 'articles']);
 
 Route::get('/User/{name?}', function ($name=null) {
     return 'Nama Saya ' .$name;
@@ -34,6 +34,14 @@ Route::get('/User/{name?}', function ($name=null) {
 Route::get('/User/{name?}', function ($name='Jhon') {
     return 'Nama Saya ' .$name;
 });
+
+Route::resource('photos', PhotoController::class )->only(['index','show']);
+
+Route::resource('photos', PhotoController::class )->except(['create','store','update','destroy']);
+
+Route::get('/greeting',[WelcomController::class,'greeting']);
+
+
 
 
 /*
